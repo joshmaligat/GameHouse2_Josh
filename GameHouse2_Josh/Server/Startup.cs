@@ -1,5 +1,7 @@
 using GameHouse2_Josh.Server.Data;
+using GameHouse2_Josh.Server.IRepository;
 using GameHouse2_Josh.Server.Models;
+using GameHouse2_Josh.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,8 @@ namespace GameHouse2_Josh.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
