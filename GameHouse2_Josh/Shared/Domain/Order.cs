@@ -8,9 +8,10 @@ namespace GameHouse2_Josh.Shared.Domain
 {
     public class Order : BaseDomainModel
     {
-        public DateTime OrderDateTime { get; set; }
+        public string OrderNo { get; set; }
+        public DateTime DateOut { get; set; }
         public double OrderTotalPrice { get; set; }
-        public DateTime OrderArrival { get; set; }
+        public DateTime DateIn { get; set; }
         public int CustID { get; set; }
         public virtual Customer Customer { get; set; }
         public int ShipID { get; set; }

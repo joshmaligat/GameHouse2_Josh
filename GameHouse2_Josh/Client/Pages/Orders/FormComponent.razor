@@ -1,0 +1,97 @@
+﻿@inject HttpClient _client
+
+<h3>FormComponent</h3>
+
+<EditForm Model="@order" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Order Number: </label>
+        <div>
+            <InputText @bind-Value="@order.OrderNo" class="form-control" />
+            <ValidationMessage For="@(() => order.OrderNo)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Placed by: </label>
+        <div>
+            <InputSelect @bind-Value="order.CustID" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@order.CustID">@customer.CustName</option>}
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => order.CustID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Deliver to: </label>
+        <div>
+            <InputSelect @bind-Value="order.ShipID" class="form-control">
+                <option value="">-- Select Address --</option>
+                @if (ShippingAddresses != null)
+                {
+                    foreach (var address in ShippingAddresses)
+                    {
+                        <option value="@order.ShipID">@address.ShipAddress</option>}
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => order.ShipID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Date Out: </label>
+        <div>
+            <InputDate @bind-Value="@order.DateOut" class="form-control" />
+            <ValidationMessage For="@(() => order.DateOut)" />
+        </div>
+    </div>
+
+    @if (order.ID > 0)
+    {
+        <div class="form-group">
+            <label>Date In: </label>
+            <div>
+                <InputDate @bind-Value="@order.DateIn" class="form-control" />
+                <ValidationMessage For="@(() => order.DateIn)" />
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <label>Total Price: </label>
+        <div>
+            <InputNumber @bind-Value="@order.OrderTotalPrice" class="form-control" />
+            <ValidationMessage For="@(() => order.OrderTotalPrice)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Order
+    </button>
+
+    <BackToList Target="orders" />
+
+</EditForm>
+
+@code {
+    [Parameter] public Order order { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Customer> Customers;
+    private IList<ShippingAddress> ShippingAddresses;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        ShippingAddresses = await _client.GetFromJsonAsync<List<ShippingAddress>>($"{Endpoints.ShippingAddressesEndpoint}");
+    }
+}

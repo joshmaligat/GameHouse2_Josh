@@ -6,19 +6,26 @@
 <h3 class="card-title">Game Orders</h3>
 <br />
 
+<a href="/orders/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Order
+</a>
+<br />
+<br />
+
 @if (Orders == null)
 {
-    <div class="alert alert-info">Loading Orders...</div> 
+    <div class="alert alert-info">Loading Orders...</div>
 }
 else
 {
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Order ID</th>
+                <th>Order Number</th>
                 <th>Placed By</th>
-                <th>Date Placed</th>
                 <th>Deliver To</th>
+                <th>Expected Arrival Date</th>
                 <th>Days Until Arrival</th>
                 <th>Price</th>
                 <th>Actions</th>
@@ -26,27 +33,27 @@ else
         </thead>
         <tbody>
             @foreach (var order in Orders)
-             {
-            <tr>
-                <td>@order.ID</td>
-                <td>@order.Customer.CustName</td>
-                <td>@order.OrderDateTime.Date.ToString("dd MMMM yyyy")</td>
-                <td>@order.ShippingAddress.ShipAddress</td>
-                <td>@order.OrderArrival.Date.ToString("dd MMMM yyyy")</td>
-                <td>@order.OrderTotalPrice</td>
-                <td>
-                    <a href="/orders/view/@order.ID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/orders/edit/@order.ID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
-             }
+            {
+                <tr>
+                    <td>@order.OrderNo</td>
+                    <td>@order.Customer.CustName</td>
+                    <td>@order.ShippingAddress.ShipAddress</td>
+                    <td>@order.DateCreated.Date.ToString("dd MMMM yyyy")</td>
+                    <td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays.ToString() : "To Be Determined")</td>
+                    <td>@order.OrderTotalPrice</td>
+                    <td>
+                        <a href="/orders/view/@order.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/orders/edit/@order.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -54,6 +61,8 @@ else
 @code {
 
     private List<Order> Orders;
+
+    private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
 
     protected async override Task OnInitializedAsync()
     {
