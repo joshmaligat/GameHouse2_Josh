@@ -31,7 +31,7 @@ namespace GameHouse2_Josh.Server.Controllers
         public async Task<IActionResult> GetGamingProducts()
         {
             //return await _context.GamingProducts.ToListAsync();
-            var products = await _unitOfWork.GamingProducts.GetAll();
+            var products = await _unitOfWork.GamingProducts.GetAll(includes: q => q.Include(x => x.Category));
             return Ok(products);
         }
 

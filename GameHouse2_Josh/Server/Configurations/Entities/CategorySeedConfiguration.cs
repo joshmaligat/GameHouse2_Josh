@@ -17,13 +17,21 @@ namespace GameHouse2_Josh.Server.Configurations.Entities
                 {
                     ID = 1,
                     CategoryType = "Featured",
-                    CategoryName = "Action"
+                    CategoryName = "Action",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Category
                 {
                     ID = 2,
                     CategoryType = "New Release",
-                    CategoryName = "Role-Playing Games"
+                    CategoryName = "Role-Playing Games",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 }
             );
         }

@@ -31,7 +31,7 @@ namespace GameHouse2_Josh.Server.Controllers
         public async Task<IActionResult> GetOrders()
         {
             //return await _context.Orders.ToListAsync();
-            var orders = await _unitOfWork.Orders.GetAll();
+            var orders = await _unitOfWork.Orders.GetAll(includes: q => q.Include(x =>x.Customer).Include(x => x.ShippingAddress));
             return Ok(orders);
         }
 

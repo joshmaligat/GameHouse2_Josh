@@ -1,0 +1,71 @@
+﻿@page "/products/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Game GamingProducts</h3>
+<br />
+
+@if (GamingProducts == null)
+{
+    <div class="alert alert-info">Loading GamingProducts...</div> 
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Cost</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in GamingProducts)
+             {
+            <tr>
+                <td>@product.ProdName</td>
+                <td>@product.Category.CategoryName</td>
+                <td>@product.ProdDesc</td>
+                <td>@product.ProdCost</td>
+                <td>@product.ProdStock</td>
+                <td>
+                    <a href="/products/view/@product.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/products/edit/@product.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(product.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+             }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<GamingProduct> GamingProducts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        GamingProducts = await _client.GetFromJsonAsync<List<GamingProduct>>($"{Endpoints.GamingProductsEndpoint}");
+    }
+
+    async Task Delete(int productId)
+    {
+        var product = GamingProducts.First(q => q.ID == productId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {product.ProdName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.GamingProductsEndpoint}/{productId}");
+            await OnInitializedAsync();
+        }
+    }
+}
+

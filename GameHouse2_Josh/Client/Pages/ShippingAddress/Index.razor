@@ -1,0 +1,69 @@
+﻿@page "/addresses/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Shipping Addresses</h3>
+<br />
+
+@if (ShippingAddresses == null)
+{
+    <div class="alert alert-info">Loading Addresses...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>Postal Code</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var address in ShippingAddresses)
+            {
+            <tr>
+                <td>@address.ShipAddress</td>
+                <td>@address.ShipCountry</td>
+                <td>@address.ShipState</td>
+                <td>@address.ShipPostalCode</td>
+                <td>
+                    <a href="/addresses/view/@address.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/addresses/edit/@address.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(address.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<ShippingAddress> ShippingAddresses;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ShippingAddresses = await _client.GetFromJsonAsync<List<ShippingAddress>>($"{Endpoints.ShippingAddressesEndpoint}");
+    }
+
+    async Task Delete(int addressId)
+    {
+        var address = ShippingAddresses.First(q => q.ID == addressId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {address.ShipAddress}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ShippingAddressesEndpoint}/{addressId}");
+            await OnInitializedAsync();
+        }
+    }
+}
