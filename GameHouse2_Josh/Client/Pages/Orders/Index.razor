@@ -1,6 +1,8 @@
 ﻿@page "/orders/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Game Orders</h3>
@@ -25,9 +27,8 @@ else
                 <th>Order Number</th>
                 <th>Placed By</th>
                 <th>Deliver To</th>
-                <th>Expected Arrival Date</th>
+                <th>Date Placed</th>
                 <th>Days Until Arrival</th>
-                <th>Price</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -40,7 +41,6 @@ else
                     <td>@order.ShippingAddress.ShipAddress</td>
                     <td>@order.DateCreated.Date.ToString("dd MMMM yyyy")</td>
                     <td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays.ToString() : "To Be Determined")</td>
-                    <td>@order.OrderTotalPrice</td>
                     <td>
                         <a href="/orders/view/@order.ID" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -66,18 +66,24 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
     }
 
     async Task Delete(int orderId)
     {
         var order = Orders.First(q => q.ID == orderId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.ID}?");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.OrderNo}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
             await OnInitializedAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
 

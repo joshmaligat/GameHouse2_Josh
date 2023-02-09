@@ -1,14 +1,23 @@
 ﻿@page "/categories/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Game Categories</h3>
 <br />
 
+<a href="/categories/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Category
+</a>
+<br />
+<br />
+
 @if (Categories == null)
 {
-    <div class="alert alert-info">Loading Categories...</div> 
+    <div class="alert alert-info">Loading Categories...</div>
 }
 else
 {
@@ -16,29 +25,27 @@ else
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var category in Categories)
-             {
-            <tr>
-                <td>@category.CategoryName</td>
-                <td>@category.CategoryType</td>
-                <td>
-                    <a href="/categories/view/@category.ID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/categories/edit/@category.ID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(category.ID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
-             }
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+                    <td>
+                        <a href="/categories/view/@category.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/categories/edit/@category.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(category.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -49,6 +56,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Categories = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategoriesEndpoint}");
     }
 
@@ -61,6 +69,11 @@ else
             await _client.DeleteAsync($"{Endpoints.CategoriesEndpoint}/{categoryId}");
             await OnInitializedAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
 

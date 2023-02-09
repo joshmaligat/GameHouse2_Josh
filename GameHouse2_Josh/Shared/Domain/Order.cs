@@ -10,11 +10,11 @@ namespace GameHouse2_Josh.Shared.Domain
     {
         public string OrderNo { get; set; }
         public DateTime DateOut { get; set; }
-        public double OrderTotalPrice { get; set; }
+        //public double OrderTotalPrice { get; set; }
         public DateTime DateIn { get; set; }
-        public int CustID { get; set; }
+        public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
-        public int ShipID { get; set; }
+        public int ShippingAddressID { get; set; }
         public virtual ShippingAddress ShippingAddress { get; set; }
     }
 }

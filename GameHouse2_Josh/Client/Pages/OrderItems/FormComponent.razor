@@ -1,0 +1,60 @@
+﻿@inject HttpClient _client
+
+<h3>FormComponent</h3>
+
+<EditForm Model="@orderitem" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Quantity: </label>
+            <div>
+                <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
+                <ValidationMessage For="@(() => orderitem.OrderQty)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Order Number: </label>
+            <div>
+                <InputSelect @bind-Value="orderitem.OrderID" class="form-control">
+                    <option value="">-- Select Order Number --</option>
+                    @if (Orders != null)
+                    {
+                        foreach (var order in Orders)
+                        {
+                            <option value="@order.ID">@order.OrderNo</option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => orderitem.OrderID)" />
+            </div>
+        </div>
+    </fieldset>
+
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+
+        <BackToList Target="orderitems" />
+
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public OrderItem orderitem { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Order> Orders;
+    private IList<GamingProduct> GamingProducts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        GamingProducts = await _client.GetFromJsonAsync<List<GamingProduct>>($"{Endpoints.GamingProductsEndpoint}");
+    }
+}

@@ -1,0 +1,68 @@
+﻿@page "/payments/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Add Payment</h3>
+<hr />
+<br />
+
+<EditForm Model="@payment" OnValidSubmit="CreatePayment">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Order Number: </label>
+        <div>
+            <InputSelect @bind-Value="payment.OrderID" class="form-control">
+                <option value="">-- Select Order Number --</option>
+                @if (Orders != null)
+                {
+                    foreach (var order in Orders)
+                    {
+                        <option value="@order.ID">@order.OrderNo</option>}
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => payment.Order)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Payment Method: </label>
+        <div>
+            <InputText @bind-Value="@payment.PaymentMethod" class="form-control" />
+            <ValidationMessage For="@(() => payment.PaymentMethod)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Payment Amount: </label>
+        <div>
+            <InputNumber @bind-Value="@payment.PaymentAmount" class="form-control" />
+            <ValidationMessage For="@(() => payment.PaymentAmount)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Payment
+    </button>
+
+</EditForm>
+
+@code {
+
+    Payment payment = new Payment();
+
+    private IList<Order> Orders;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+    }
+
+    private async Task CreatePayment()
+    {
+        await _client.PostAsJsonAsync(Endpoints.PaymentsEndpoint, payment);
+        _navManager.NavigateTo("/payments/");
+    }
+}

@@ -1,14 +1,23 @@
 ﻿@page "/customers/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Game Customers</h3>
 <br />
 
+<a href="/customers/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Customer
+</a>
+<br />
+<br />
+
 @if (Customers == null)
 {
-    <div class="alert alert-info">Loading Customers...</div> 
+    <div class="alert alert-info">Loading Customers...</div>
 }
 else
 {
@@ -23,24 +32,24 @@ else
         </thead>
         <tbody>
             @foreach (var customer in Customers)
-             {
-            <tr>
-                <td>@customer.CustName</td>
-                <td>@customer.CustEmail</td>
-                <td>@customer.CustContact</td>
-                <td>
-                    <a href="/customers/view/@customer.ID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/customers/edit/@customer.ID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(customer.ID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
-             }
+            {
+                <tr>
+                    <td>@customer.CustName</td>
+                    <td>@customer.CustEmail</td>
+                    <td>@customer.CustContact</td>
+                    <td>
+                        <a href="/customers/view/@customer.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/customers/edit/@customer.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(customer.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -51,6 +60,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
 
@@ -63,6 +73,11 @@ else
             await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
             await OnInitializedAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
 

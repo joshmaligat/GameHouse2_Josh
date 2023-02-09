@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameHouse2_Josh.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230205143023_newdb")]
-    partial class newdb
+    [Migration("20230208143150_error_fix")]
+    partial class error_fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,7 +96,7 @@ namespace GameHouse2_Josh.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7c174bb-4aea-405d-ae02-821c28cbc9ef",
+                            ConcurrencyStamp = "a8aca1e0-f3de-4114-9329-d137ed45defe",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -104,9 +104,9 @@ namespace GameHouse2_Josh.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJHMguFXOzrg+si1ozzgzyVDXk07mtsrKeiLLw4F/ovhaiPfn0AAIceIGFpIY1M6Nw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG+y0CzPV6gsLAdsO+UehfPfSUcYKOqp0KGejeD62rCZm4tV4nd0GhERbXcyiOqTbw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "63db3e42-16e0-4158-a83b-a5de6c92f0ed",
+                            SecurityStamp = "0901ea72-d80d-48cd-8d23-76757a748e6d",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -120,9 +120,6 @@ namespace GameHouse2_Josh.Server.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CategoryType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -146,20 +143,18 @@ namespace GameHouse2_Josh.Server.Migrations
                         {
                             ID = 1,
                             CategoryName = "Action",
-                            CategoryType = "Featured",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 5, 22, 30, 23, 275, DateTimeKind.Local).AddTicks(8379),
-                            DateUpdated = new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4352),
+                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 348, DateTimeKind.Local).AddTicks(8887),
+                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(5680),
                             UpdatedBy = "System"
                         },
                         new
                         {
                             ID = 2,
                             CategoryName = "Role-Playing Games",
-                            CategoryType = "New Release",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4884),
-                            DateUpdated = new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4887),
+                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6258),
+                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6261),
                             UpdatedBy = "System"
                         });
                 });
@@ -204,8 +199,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             CustContact = "9876 5432",
                             CustEmail = "jerome123@gmail.com",
                             CustName = "Jerome Tan",
-                            DateCreated = new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3329),
-                            DateUpdated = new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3334),
+                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5002),
+                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5007),
                             UpdatedBy = "System"
                         },
                         new
@@ -215,8 +210,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             CustContact = "9988 7766",
                             CustEmail = "kylie321@gmail.com",
                             CustName = "Kylie Kaili",
-                            DateCreated = new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3337),
-                            DateUpdated = new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3338),
+                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5009),
+                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5010),
                             UpdatedBy = "System"
                         });
                 });
@@ -272,10 +267,7 @@ namespace GameHouse2_Josh.Server.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CustomerID")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
@@ -296,16 +288,10 @@ namespace GameHouse2_Josh.Server.Migrations
                     b.Property<string>("OrderNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("OrderTotalPrice")
-                        .HasColumnType("float");
-
                     b.Property<int?>("PaymentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShipID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShippingAddressID")
+                    b.Property<int>("ShippingAddressID")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -340,16 +326,16 @@ namespace GameHouse2_Josh.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("OrderCost")
+                        .HasColumnType("float");
+
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderQty")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProdID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -387,9 +373,6 @@ namespace GameHouse2_Josh.Server.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("PaymentMethod")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -571,14 +554,14 @@ namespace GameHouse2_Josh.Server.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "f17dc048-577c-4f3e-9a72-214100d315ea",
+                            ConcurrencyStamp = "3cc3a3a9-b777-44e0-8d84-206a2309676e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "98fb053b-ed18-4c88-8a19-26b509c2d3f5",
+                            ConcurrencyStamp = "55a0246c-2f4f-491a-9931-327250097820",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -714,7 +697,9 @@ namespace GameHouse2_Josh.Server.Migrations
                 {
                     b.HasOne("GameHouse2_Josh.Shared.Domain.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerID");
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GameHouse2_Josh.Shared.Domain.OrderItem", null)
                         .WithMany("Orders")
@@ -726,7 +711,9 @@ namespace GameHouse2_Josh.Server.Migrations
 
                     b.HasOne("GameHouse2_Josh.Shared.Domain.ShippingAddress", "ShippingAddress")
                         .WithMany("Orders")
-                        .HasForeignKey("ShippingAddressID");
+                        .HasForeignKey("ShippingAddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -743,7 +730,9 @@ namespace GameHouse2_Josh.Server.Migrations
 
                     b.HasOne("GameHouse2_Josh.Shared.Domain.GamingProduct", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 

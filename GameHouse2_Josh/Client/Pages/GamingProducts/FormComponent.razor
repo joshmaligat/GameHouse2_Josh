@@ -1,0 +1,83 @@
+﻿@inject HttpClient _client
+
+<h3>FormComponent</h3>
+
+<EditForm Model="@product" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Product Name: </label>
+            <div>
+                <InputText @bind-Value="@product.ProdName" class="form-control" />
+                <ValidationMessage For="@(() => product.ProdName)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Category: </label>
+            <div>
+                <InputSelect @bind-Value="product.CategoryID" class="form-control">
+                    <option value="">-- Select Category --</option>
+                    @if (Categories != null)
+                    {
+                        foreach (var category in Categories)
+                        {
+                            <option value="@category.ID">@category.CategoryName</option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => product.CategoryID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Description: </label>
+            <div>
+                <InputTextArea @bind-Value="@product.ProdDesc" class="form-control" />
+                <ValidationMessage For="@(() => product.ProdDesc)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Cost: </label>
+            <div>
+                <InputNumber @bind-Value="@product.ProdCost" class="form-control" />
+                <ValidationMessage For="@(() => product.ProdCost)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Stock: </label>
+            <div>
+                <InputNumber @bind-Value="@product.ProdStock" class="form-control" />
+                <ValidationMessage For="@(() => product.ProdStock)" />
+            </div>
+        </div>
+
+    </fieldset>
+
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+
+        <BackToList Target="products" />
+
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public GamingProduct product { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Category> Categories;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Categories = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategoriesEndpoint}");
+    }
+}

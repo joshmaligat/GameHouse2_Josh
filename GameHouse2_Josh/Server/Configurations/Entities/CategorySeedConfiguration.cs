@@ -16,7 +16,7 @@ namespace GameHouse2_Josh.Server.Configurations.Entities
                 new Category
                 {
                     ID = 1,
-                    CategoryType = "Featured",
+                    //CategoryType = "Featured",
                     CategoryName = "Action",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
@@ -26,7 +26,7 @@ namespace GameHouse2_Josh.Server.Configurations.Entities
                 new Category
                 {
                     ID = 2,
-                    CategoryType = "New Release",
+                    //CategoryType = "New Release",
                     CategoryName = "Role-Playing Games",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,

@@ -1,9 +1,18 @@
 ﻿@page "/addresses/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Shipping Addresses</h3>
+<br />
+
+<a href="/addresses/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Address
+</a>
+<br />
 <br />
 
 @if (ShippingAddresses == null)
@@ -25,23 +34,23 @@ else
         <tbody>
             @foreach (var address in ShippingAddresses)
             {
-            <tr>
-                <td>@address.ShipAddress</td>
-                <td>@address.ShipCountry</td>
-                <td>@address.ShipState</td>
-                <td>@address.ShipPostalCode</td>
-                <td>
-                    <a href="/addresses/view/@address.ID" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/addresses/edit/@address.ID" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(address.ID))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr>
+                    <td>@address.ShipAddress</td>
+                    <td>@address.ShipCountry</td>
+                    <td>@address.ShipState</td>
+                    <td>@address.ShipPostalCode</td>
+                    <td>
+                        <a href="/addresses/view/@address.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/addresses/edit/@address.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(address.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -53,6 +62,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         ShippingAddresses = await _client.GetFromJsonAsync<List<ShippingAddress>>($"{Endpoints.ShippingAddressesEndpoint}");
     }
 
@@ -65,5 +75,10 @@ else
             await _client.DeleteAsync($"{Endpoints.ShippingAddressesEndpoint}/{addressId}");
             await OnInitializedAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

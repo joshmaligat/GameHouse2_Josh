@@ -1,0 +1,61 @@
+﻿@page "/orderitems/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Add OrderItem</h3>
+<hr />
+<br />
+
+<EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Quantity: </label>
+        <div>
+            <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
+            <ValidationMessage For="@(() => orderitem.OrderQty)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Order Number: </label>
+        <div>
+            <InputSelect @bind-Value="orderitem.OrderID" class="form-control">
+                <option value="">-- Select Order Number --</option>
+                @if (Orders != null)
+                {
+                    foreach (var order in Orders)
+                    {
+                        <option value="@order.ID">@order.OrderNo</option>}
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => orderitem.OrderID)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Order Item
+    </button>
+
+</EditForm>
+
+@code {
+
+    OrderItem orderitem = new OrderItem();
+
+    private IList<Order> Orders;
+    private IList<GamingProduct> GamingProducts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        GamingProducts = await _client.GetFromJsonAsync<List<GamingProduct>>($"{Endpoints.GamingProductsEndpoint}");
+    }
+
+    private async Task CreateOrderItem()
+    {
+        await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
+        _navManager.NavigateTo("/orderitems/");
+    }
+}

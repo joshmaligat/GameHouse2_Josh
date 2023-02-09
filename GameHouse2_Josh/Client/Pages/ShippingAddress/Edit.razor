@@ -1,0 +1,23 @@
+﻿@page "/addresses/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Edit Address</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditAddress" address="address" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    ShippingAddress address = new ShippingAddress();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        address = await _client.GetFromJsonAsync<ShippingAddress>($"{Endpoints.ShippingAddressesEndpoint}/{id}");
+    }
+
+    async Task EditAddress()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.ShippingAddressesEndpoint}/{id}", address);
+        _navManager.NavigateTo("/addresses/");
+    }
+}

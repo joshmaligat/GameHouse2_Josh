@@ -8,7 +8,7 @@ namespace GameHouse2_Josh.Shared.Domain
 {
     public class Payment : BaseDomainModel
     {
-        public string PaymentType { get; set; }
+        //public string PaymentType { get; set; }
         public double PaymentAmount { get; set; }
         public string PaymentMethod { get; set; }
         public int OrderID { get; set; }

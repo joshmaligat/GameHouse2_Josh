@@ -1,0 +1,56 @@
+﻿<h3>FormComponent</h3>
+
+<EditForm Model="@address" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Customer Name: </label>
+            <div>
+                <InputText @bind-Value="@address.ShipAddress" class="form-control" />
+                <ValidationMessage For="@(() => address.ShipAddress)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email: </label>
+            <div>
+                <InputText @bind-Value="@address.ShipCountry" class="form-control" />
+                <ValidationMessage For="@(() => address.ShipCountry)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Number: </label>
+            <div>
+                <InputText @bind-Value="@address.ShipState" class="form-control" />
+                <ValidationMessage For="@(() => address.ShipState)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Customer Name: </label>
+            <div>
+                <InputText @bind-Value="@address.ShipPostalCode" class="form-control" />
+                <ValidationMessage For="@(() => address.ShipPostalCode)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+
+    <BackToList Target="addresses" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public ShippingAddress address { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

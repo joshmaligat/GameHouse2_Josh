@@ -1,0 +1,66 @@
+﻿@inject HttpClient _client
+
+<h3>FormComponent</h3>
+
+<EditForm Model="@payment" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Order Number: </label>
+            <div>
+                <InputSelect @bind-Value="payment.OrderID" class="form-control">
+                    <option value="">-- Select Order Number --</option>
+                    @if (Orders != null)
+                    {
+                        foreach (var order in Orders)
+                        {
+                            <option value="@order.ID">@order.OrderNo</option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => payment.Order)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Payment Method: </label>
+            <div>
+                <InputText @bind-Value="@payment.PaymentMethod" class="form-control" />
+                <ValidationMessage For="@(() => payment.PaymentMethod)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Payment Amount: </label>
+            <div>
+                <InputNumber @bind-Value="@payment.PaymentAmount" class="form-control" />
+                <ValidationMessage For="@(() => payment.PaymentAmount)" />
+            </div>
+        </div>
+    </fieldset>
+
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+
+        <BackToList Target="payments" />
+
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Payment payment { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Order> Orders;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+    }
+}

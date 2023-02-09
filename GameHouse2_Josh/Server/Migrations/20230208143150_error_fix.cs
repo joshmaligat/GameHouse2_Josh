@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GameHouse2_Josh.Server.Migrations
 {
-    public partial class newdb : Migration
+    public partial class error_fix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,6 @@ namespace GameHouse2_Josh.Server.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -285,12 +284,9 @@ namespace GameHouse2_Josh.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderTotalPrice = table.Column<double>(type: "float", nullable: false),
                     DateIn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustID = table.Column<int>(type: "int", nullable: false),
-                    CustomerID = table.Column<int>(type: "int", nullable: true),
-                    ShipID = table.Column<int>(type: "int", nullable: false),
-                    ShippingAddressID = table.Column<int>(type: "int", nullable: true),
+                    CustomerID = table.Column<int>(type: "int", nullable: false),
+                    ShippingAddressID = table.Column<int>(type: "int", nullable: false),
                     OrderItemID = table.Column<int>(type: "int", nullable: true),
                     PaymentID = table.Column<int>(type: "int", nullable: true),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -306,13 +302,13 @@ namespace GameHouse2_Josh.Server.Migrations
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_ShippingAddresses_ShippingAddressID",
                         column: x => x.ShippingAddressID,
                         principalTable: "ShippingAddresses",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,9 +318,9 @@ namespace GameHouse2_Josh.Server.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderQty = table.Column<int>(type: "int", nullable: false),
+                    OrderCost = table.Column<double>(type: "float", nullable: false),
                     OrderID = table.Column<int>(type: "int", nullable: false),
-                    ProdID = table.Column<int>(type: "int", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: true),
+                    ProductID = table.Column<int>(type: "int", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -338,7 +334,7 @@ namespace GameHouse2_Josh.Server.Migrations
                         column: x => x.ProductID,
                         principalTable: "GamingProducts",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderID",
                         column: x => x.OrderID,
@@ -353,7 +349,6 @@ namespace GameHouse2_Josh.Server.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PaymentAmount = table.Column<double>(type: "float", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderID = table.Column<int>(type: "int", nullable: false),
@@ -378,22 +373,22 @@ namespace GameHouse2_Josh.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "f17dc048-577c-4f3e-9a72-214100d315ea", "Administrator", "ADMINISTRATOR" },
-                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "98fb053b-ed18-4c88-8a19-26b509c2d3f5", "User", "USER" }
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3cc3a3a9-b777-44e0-8d84-206a2309676e", "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "55a0246c-2f4f-491a-9931-327250097820", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "d7c174bb-4aea-405d-ae02-821c28cbc9ef", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEJHMguFXOzrg+si1ozzgzyVDXk07mtsrKeiLLw4F/ovhaiPfn0AAIceIGFpIY1M6Nw==", null, false, "63db3e42-16e0-4158-a83b-a5de6c92f0ed", false, "Admin" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "a8aca1e0-f3de-4114-9329-d137ed45defe", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEG+y0CzPV6gsLAdsO+UehfPfSUcYKOqp0KGejeD62rCZm4tV4nd0GhERbXcyiOqTbw==", null, false, "0901ea72-d80d-48cd-8d23-76757a748e6d", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "ID", "CategoryName", "CategoryType", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
+                columns: new[] { "ID", "CategoryName", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "Action", "Featured", "System", new DateTime(2023, 2, 5, 22, 30, 23, 275, DateTimeKind.Local).AddTicks(8379), new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4352), "System" },
-                    { 2, "Role-Playing Games", "New Release", "System", new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4884), new DateTime(2023, 2, 5, 22, 30, 23, 276, DateTimeKind.Local).AddTicks(4887), "System" }
+                    { 1, "Action", "System", new DateTime(2023, 2, 8, 22, 31, 50, 348, DateTimeKind.Local).AddTicks(8887), new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(5680), "System" },
+                    { 2, "Role-Playing Games", "System", new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6258), new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6261), "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -401,8 +396,8 @@ namespace GameHouse2_Josh.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "CustContact", "CustEmail", "CustName", "DateCreated", "DateUpdated", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", "9876 5432", "jerome123@gmail.com", "Jerome Tan", new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3329), new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3334), "System" },
-                    { 2, "System", "9988 7766", "kylie321@gmail.com", "Kylie Kaili", new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3337), new DateTime(2023, 2, 5, 22, 30, 23, 277, DateTimeKind.Local).AddTicks(3338), "System" }
+                    { 1, "System", "9876 5432", "jerome123@gmail.com", "Jerome Tan", new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5002), new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5007), "System" },
+                    { 2, "System", "9988 7766", "kylie321@gmail.com", "Kylie Kaili", new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5009), new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5010), "System" }
                 });
 
             migrationBuilder.InsertData(
