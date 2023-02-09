@@ -2,75 +2,11 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Add OrderItem</h3>
+<h3 class="card-title">Add Order Item</h3>
 <hr />
 <br />
 
-<EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Order Number: </label>
-        <div>
-            <InputSelect @bind-Value="orderitem.OrderID" class="form-control">
-                <option value="">-- Select Order Number --</option>
-                @if (Orders != null)
-                {
-                    foreach (var order in Orders)
-                    {
-                        <option value="@order.ID">@order.OrderNo</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => orderitem.OrderID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Product Name: </label>
-        <div>
-            <InputSelect @bind-Value="orderitem.ProductID" class="form-control">
-                <option value="">-- Select Product --</option>
-                @if (GamingProducts != null)
-                {
-                    foreach (var product in GamingProducts)
-                    {
-                        <option value="@product.ID">@product.ProdName</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => orderitem.ProductID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Cost (Per 1): </label>
-        <div>
-            <InputSelect @bind-Value="orderitem.ProductID" class="form-control">
-                <option value="">-- Select Product --</option>
-                @if (GamingProducts != null)
-                {
-                    foreach (var product in GamingProducts)
-                    {
-                        <option value="@product.ID">@product.ProdCost</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => orderitem.ProductID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Quantity: </label>
-        <div>
-            <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
-            <ValidationMessage For="@(() => orderitem.OrderQty)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Order Item
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Create Order Item" orderitem="orderitem" OnValidSubmit="@CreateOrderItem" />
 
 @code {
 

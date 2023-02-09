@@ -6,47 +6,7 @@
 <hr />
 <br />
 
-<EditForm Model="@address" OnValidSubmit="CreateShippingAddress">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Address: </label>
-        <div>
-            <InputText @bind-Value="@address.ShipAddress" class="form-control" />
-            <ValidationMessage For="@(() => address.ShipAddress)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Country: </label>
-        <div>
-            <InputText @bind-Value="@address.ShipCountry" class="form-control" />
-            <ValidationMessage For="@(() => address.ShipCountry)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>State: </label>
-        <div>
-            <InputText @bind-Value="@address.ShipState" class="form-control" />
-            <ValidationMessage For="@(() => address.ShipState)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Postal Code: </label>
-        <div>
-            <InputText @bind-Value="@address.ShipPostalCode" class="form-control" />
-            <ValidationMessage For="@(() => address.ShipPostalCode)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Shipping Address
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Create Shipping Address" address="address" OnValidSubmit="@CreateShippingAddress" />
 
 @code {
 

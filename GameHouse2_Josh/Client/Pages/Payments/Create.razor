@@ -6,53 +6,7 @@
 <hr />
 <br />
 
-<EditForm Model="@payment" OnValidSubmit="CreatePayment">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Order Number: </label>
-        <div>
-            <InputSelect @bind-Value="payment.OrderID" class="form-control">
-                <option value="">-- Select Order Number --</option>
-                @if (Orders != null)
-                {
-                    foreach (var order in Orders)
-                    {
-                        <option value="@order.ID">@order.OrderNo</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => payment.Order)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Payment Method: </label>
-        <div>
-            <InputSelect @bind-Value="payment.PaymentMethod" class="form-control">
-                <option value="">-- Select Payment Method --</option>
-                <option value="Cash">Cash</option>
-                <option value="Card">Card</option>
-                <option value="Nets">Nets</option>
-                <option value="GrabPay">GrabPay</option>
-            </InputSelect>
-            <ValidationMessage For="@(() => payment.PaymentMethod)" />
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            <label>Payment Amount: </label>
-            <div>
-                <InputNumber @bind-Value="@payment.PaymentAmount" class="form-control" />
-                <ValidationMessage For="@(() => payment.PaymentAmount)" />
-            </div>
-        </div> *@
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Payment
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Create Payment" payment="payment" OnValidSubmit="@CreatePayment" />
 
 @code {
 

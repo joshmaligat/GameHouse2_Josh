@@ -6,74 +6,7 @@
 <hr />
 <br />
 
-<EditForm Model="@order" OnValidSubmit="CreateOrder">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Order Number: </label>
-        <div>
-            <InputText @bind-Value="@order.OrderNo" class="form-control" />
-            <ValidationMessage For="@(() => order.OrderNo)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Placed by: </label>
-        <div>
-            <InputSelect @bind-Value="order.CustomerID" class="form-control">
-                <option value="">-- Select Customer --</option>
-                @if (Customers != null)
-                {
-                    foreach (var customer in Customers)
-                    {
-                        <option value="@customer.ID">@customer.CustName</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => order.CustomerID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Deliver to: </label>
-        <div>
-            <InputSelect @bind-Value="order.ShippingAddressID" class="form-control">
-                <option value="">-- Select Address --</option>
-                @if (ShippingAddresses != null)
-                {
-                    foreach (var address in ShippingAddresses)
-                    {
-                        <option value="@address.ID">@address.ShipAddress</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => order.ShippingAddressID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Date Out: </label>
-        <div>
-            <InputDate @bind-Value="@order.DateOut" class="form-control" />
-            <ValidationMessage For="@(() => order.DateOut)" />
-        </div>
-    </div>
-
-    @if (order.ID > 0)
-    {
-        <div class="form-group">
-            <label>Date In: </label>
-            <div>
-                <InputDate @bind-Value="@order.DateIn" class="form-control" />
-                <ValidationMessage For="@(() => order.DateIn)" />
-            </div>
-        </div>
-    }
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Order
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Create Order" order="order" OnValidSubmit="@CreateOrder" />
 
 @code {
 

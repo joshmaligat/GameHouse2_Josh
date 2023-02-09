@@ -6,63 +6,7 @@
 <hr />
 <br />
 
-<EditForm Model="@product" OnValidSubmit="CreateGamingProduct">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Product Name: </label>
-        <div>
-            <InputText @bind-Value="@product.ProdName" class="form-control" />
-            <ValidationMessage For="@(() => product.ProdName)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Category: </label>
-        <div>
-            <InputSelect @bind-Value="product.CategoryID" class="form-control">
-                <option value="">-- Select Category --</option>
-                @if (Categories != null)
-                {
-                    foreach (var category in Categories)
-                    {
-                        <option value="@category.ID">@category.CategoryName</option>}
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => product.CategoryID)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Product Description: </label>
-        <div>
-            <InputTextArea @bind-Value="@product.ProdDesc" class="form-control" />
-            <ValidationMessage For="@(() => product.ProdDesc)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Product Cost: </label>
-        <div>
-            <InputNumber @bind-Value="@product.ProdCost" class="form-control" />
-            <ValidationMessage For="@(() => product.ProdCost)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Product Stock: </label>
-        <div>
-            <InputNumber @bind-Value="@product.ProdStock" class="form-control" />
-            <ValidationMessage For="@(() => product.ProdStock)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Product
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Create Product" product="product" OnValidSubmit="@CreateGamingProduct" />
 
 @code {
 
