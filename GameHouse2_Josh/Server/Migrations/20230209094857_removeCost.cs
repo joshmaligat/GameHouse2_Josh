@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GameHouse2_Josh.Server.Migrations
 {
-    public partial class error_fix : Migration
+    public partial class removeCost : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -318,7 +318,6 @@ namespace GameHouse2_Josh.Server.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderQty = table.Column<int>(type: "int", nullable: false),
-                    OrderCost = table.Column<double>(type: "float", nullable: false),
                     OrderID = table.Column<int>(type: "int", nullable: false),
                     ProductID = table.Column<int>(type: "int", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -349,7 +348,6 @@ namespace GameHouse2_Josh.Server.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentAmount = table.Column<double>(type: "float", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderID = table.Column<int>(type: "int", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -373,22 +371,22 @@ namespace GameHouse2_Josh.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3cc3a3a9-b777-44e0-8d84-206a2309676e", "Administrator", "ADMINISTRATOR" },
-                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "55a0246c-2f4f-491a-9931-327250097820", "User", "USER" }
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "74504843-ce82-4a8b-bbea-f42cff5bb276", "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "b10640b5-0cbc-43b5-a7c9-0c1dd3dc9972", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "a8aca1e0-f3de-4114-9329-d137ed45defe", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEG+y0CzPV6gsLAdsO+UehfPfSUcYKOqp0KGejeD62rCZm4tV4nd0GhERbXcyiOqTbw==", null, false, "0901ea72-d80d-48cd-8d23-76757a748e6d", false, "Admin" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "7c317f93-3142-4fb3-b85c-5b9c2b7267fe", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEIE4TNArjfF4qYtWpGOcaLsf5CmklccgSPdR2mEgBLDSMwGFJlxKlOlWXhBzWpUrkQ==", null, false, "c6f26d01-2c71-4e28-88eb-335e4e775df9", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "ID", "CategoryName", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "Action", "System", new DateTime(2023, 2, 8, 22, 31, 50, 348, DateTimeKind.Local).AddTicks(8887), new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(5680), "System" },
-                    { 2, "Role-Playing Games", "System", new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6258), new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6261), "System" }
+                    { 1, "Action", "System", new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(3287), new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9280), "System" },
+                    { 2, "Role-Playing Games", "System", new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9833), new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9836), "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -396,8 +394,8 @@ namespace GameHouse2_Josh.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "CustContact", "CustEmail", "CustName", "DateCreated", "DateUpdated", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", "9876 5432", "jerome123@gmail.com", "Jerome Tan", new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5002), new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5007), "System" },
-                    { 2, "System", "9988 7766", "kylie321@gmail.com", "Kylie Kaili", new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5009), new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5010), "System" }
+                    { 1, "System", "9876 5432", "jerome123@gmail.com", "Jerome Tan", new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8417), new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8422), "System" },
+                    { 2, "System", "9988 7766", "kylie321@gmail.com", "Kylie Kaili", new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8424), new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8426), "System" }
                 });
 
             migrationBuilder.InsertData(

@@ -21,34 +21,34 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="paymentsTable">
         <thead>
             <tr>
                 <th>Order Number</th>
                 <th>Payment Method</th>
-                <th>Amount Payable</th>
+                @*<th>Amount Payable</th>*@
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var payment in Payments)
             {
-                <tr>
-                    <td>@payment.Order.OrderNo</td>
-                    <td>@payment.PaymentMethod</td>
-                    <td>@payment.PaymentAmount</td>
-                    <td>
-                        <a href="/payments/view/@payment.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/payments/edit/@payment.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@payment.Order.OrderNo</td>
+                <td>@payment.PaymentMethod</td>
+                @*<td>@payment.PaymentAmount</td>*@
+                <td>
+                    <a href="/payments/view/@payment.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/payments/edit/@payment.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(payment.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -64,6 +64,17 @@ else
         Payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#paymentsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#paymentsTable");
+        _interceptor.DisposeEvent();
+    }
+
     async Task Delete(int paymentId)
     {
         var payment = Payments.First(q => q.ID == paymentId);
@@ -73,11 +84,6 @@ else
             await _client.DeleteAsync($"{Endpoints.PaymentsEndpoint}/{paymentId}");
             await OnInitializedAsync();
         }
-    }
-
-    public void Dispose()
-    {
-        _interceptor.DisposeEvent();
     }
 }
 

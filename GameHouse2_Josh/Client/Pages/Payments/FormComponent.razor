@@ -24,20 +24,34 @@
         </div>
 
         <div class="form-group">
+            <label>Order Number: </label>
+            <div>
+                <InputSelect @bind-Value="payment.PaymentMethod" class="form-control">
+                    <option value="">-- Select Payment Method --</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="Nets">Nets</option>
+                    <option value="GrabPay">GrabPay</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => payment.PaymentMethod)" />
+            </div>
+        </div>
+
+        @*<div class="form-group">
             <label>Payment Method: </label>
             <div>
                 <InputText @bind-Value="@payment.PaymentMethod" class="form-control" />
                 <ValidationMessage For="@(() => payment.PaymentMethod)" />
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             <label>Payment Amount: </label>
             <div>
                 <InputNumber @bind-Value="@payment.PaymentAmount" class="form-control" />
                 <ValidationMessage For="@(() => payment.PaymentAmount)" />
             </div>
-        </div>
+        </div>*@
     </fieldset>
 
         @if (!Disabled)

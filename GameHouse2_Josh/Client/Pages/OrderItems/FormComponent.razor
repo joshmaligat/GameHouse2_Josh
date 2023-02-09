@@ -8,14 +8,6 @@
 
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Quantity: </label>
-            <div>
-                <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
-                <ValidationMessage For="@(() => orderitem.OrderQty)" />
-            </div>
-        </div>
-
-        <div class="form-group">
             <label>Order Number: </label>
             <div>
                 <InputSelect @bind-Value="orderitem.OrderID" class="form-control">
@@ -28,6 +20,46 @@
                     }
                 </InputSelect>
                 <ValidationMessage For="@(() => orderitem.OrderID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Name: </label>
+            <div>
+                <InputSelect @bind-Value="orderitem.ProductID" class="form-control">
+                    <option value="">-- Select Product --</option>
+                    @if (GamingProducts != null)
+                    {
+                        foreach (var product in GamingProducts)
+                        {
+                            <option value="@product.ID">@product.ProdName</option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => orderitem.ProductID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Cost (Per 1): </label>
+            <div>
+                <InputSelect @bind-Value="orderitem.ProductID" class="form-control">
+                    <option value="">-- Select Product --</option>
+                    @if (GamingProducts != null)
+                    {
+                        foreach (var product in GamingProducts)
+                        {
+                            <option value="@product.ID">@product.ProdCost</option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => orderitem.ProductID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Quantity: </label>
+            <div>
+                <InputNumber @bind-Value="@orderitem.OrderQty" class="form-control" />
+                <ValidationMessage For="@(() => orderitem.OrderQty)" />
             </div>
         </div>
     </fieldset>

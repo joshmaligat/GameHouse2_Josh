@@ -21,38 +21,38 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="orderitemsTable">
         <thead>
             <tr>
                 <th>Order Number</th>
                 <th>Product Name</th>
-                <th>Product Cost</th>
+                <th>Cost (Per 1)</th>
                 <th>Order Quantity</th>
-                <th>Order Total</th>
+                @*<th>Order Total</th>*@
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var orderitem in OrderItems)
             {
-                <tr>
-                    <td>@orderitem.Order.OrderNo</td>
-                    <td>@orderitem.Product.ProdName</td>
-                    <td>@orderitem.Product.ProdCost</td>
-                    <td>@orderitem.OrderQty</td>
-                    <td>@orderitem.OrderCost</td>
-                    <td>
-                        <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/orderitems/edit/@orderitem.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(orderitem.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@orderitem.Order.OrderNo</td>
+                <td>@orderitem.Product.ProdName</td>
+                <td>@orderitem.Product.ProdCost</td>
+                <td>@orderitem.OrderQty</td>
+                @*<td>@orderitem.OrderCost</td>*@
+                <td>
+                    <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/orderitems/edit/@orderitem.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(orderitem.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -68,6 +68,17 @@ else
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#orderitemsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#orderitemsTable");
+        _interceptor.DisposeEvent();
+    }
+
     async Task Delete(int orderitemId)
     {
         var orderitem = OrderItems.First(q => q.ID == orderitemId);
@@ -77,11 +88,6 @@ else
             await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderitemId}");
             await OnInitializedAsync();
         }
-    }
-
-    public void Dispose()
-    {
-        _interceptor.DisposeEvent();
     }
 }
 

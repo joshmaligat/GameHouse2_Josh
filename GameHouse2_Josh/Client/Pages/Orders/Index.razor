@@ -21,7 +21,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="ordersTable">
         <thead>
             <tr>
                 <th>Order Number</th>
@@ -70,6 +70,17 @@ else
         Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#ordersTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#ordersTable");
+        _interceptor.DisposeEvent();
+    }
+
     async Task Delete(int orderId)
     {
         var order = Orders.First(q => q.ID == orderId);
@@ -79,11 +90,6 @@ else
             await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
             await OnInitializedAsync();
         }
-    }
-
-    public void Dispose()
-    {
-        _interceptor.DisposeEvent();
     }
 }
 

@@ -21,7 +21,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="categoriesTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -60,6 +60,17 @@ else
         Categories = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategoriesEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#categoriesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#categoriesTable");
+        _interceptor.DisposeEvent();
+    }
+
     async Task Delete(int categoryId)
     {
         var category = Categories.First(q => q.ID == categoryId);
@@ -69,11 +80,6 @@ else
             await _client.DeleteAsync($"{Endpoints.CategoriesEndpoint}/{categoryId}");
             await OnInitializedAsync();
         }
-    }
-
-    public void Dispose()
-    {
-        _interceptor.DisposeEvent();
     }
 }
 

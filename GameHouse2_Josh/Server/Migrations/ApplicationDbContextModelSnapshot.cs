@@ -94,7 +94,7 @@ namespace GameHouse2_Josh.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a8aca1e0-f3de-4114-9329-d137ed45defe",
+                            ConcurrencyStamp = "7c317f93-3142-4fb3-b85c-5b9c2b7267fe",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -102,9 +102,9 @@ namespace GameHouse2_Josh.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG+y0CzPV6gsLAdsO+UehfPfSUcYKOqp0KGejeD62rCZm4tV4nd0GhERbXcyiOqTbw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIE4TNArjfF4qYtWpGOcaLsf5CmklccgSPdR2mEgBLDSMwGFJlxKlOlWXhBzWpUrkQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0901ea72-d80d-48cd-8d23-76757a748e6d",
+                            SecurityStamp = "c6f26d01-2c71-4e28-88eb-335e4e775df9",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -142,8 +142,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             ID = 1,
                             CategoryName = "Action",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 348, DateTimeKind.Local).AddTicks(8887),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(5680),
+                            DateCreated = new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(3287),
+                            DateUpdated = new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9280),
                             UpdatedBy = "System"
                         },
                         new
@@ -151,8 +151,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             ID = 2,
                             CategoryName = "Role-Playing Games",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6258),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 349, DateTimeKind.Local).AddTicks(6261),
+                            DateCreated = new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9833),
+                            DateUpdated = new DateTime(2023, 2, 9, 17, 48, 56, 865, DateTimeKind.Local).AddTicks(9836),
                             UpdatedBy = "System"
                         });
                 });
@@ -197,8 +197,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             CustContact = "9876 5432",
                             CustEmail = "jerome123@gmail.com",
                             CustName = "Jerome Tan",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5002),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5007),
+                            DateCreated = new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8417),
+                            DateUpdated = new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8422),
                             UpdatedBy = "System"
                         },
                         new
@@ -208,8 +208,8 @@ namespace GameHouse2_Josh.Server.Migrations
                             CustContact = "9988 7766",
                             CustEmail = "kylie321@gmail.com",
                             CustName = "Kylie Kaili",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5009),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 31, 50, 350, DateTimeKind.Local).AddTicks(5010),
+                            DateCreated = new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8424),
+                            DateUpdated = new DateTime(2023, 2, 9, 17, 48, 56, 866, DateTimeKind.Local).AddTicks(8426),
                             UpdatedBy = "System"
                         });
                 });
@@ -324,9 +324,6 @@ namespace GameHouse2_Josh.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("OrderCost")
-                        .HasColumnType("float");
-
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
@@ -366,9 +363,6 @@ namespace GameHouse2_Josh.Server.Migrations
 
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
-
-                    b.Property<double>("PaymentAmount")
-                        .HasColumnType("float");
 
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("nvarchar(max)");
@@ -552,14 +546,14 @@ namespace GameHouse2_Josh.Server.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "3cc3a3a9-b777-44e0-8d84-206a2309676e",
+                            ConcurrencyStamp = "74504843-ce82-4a8b-bbea-f42cff5bb276",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "55a0246c-2f4f-491a-9931-327250097820",
+                            ConcurrencyStamp = "b10640b5-0cbc-43b5-a7c9-0c1dd3dc9972",
                             Name = "User",
                             NormalizedName = "USER"
                         });
