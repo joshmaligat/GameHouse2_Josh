@@ -6,7 +6,7 @@
 
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Customer Name: </label>
+            <label>Address: </label>
             <div>
                 <InputText @bind-Value="@address.ShipAddress" class="form-control" />
                 <ValidationMessage For="@(() => address.ShipAddress)" />
@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group">
-            <label>Email: </label>
+            <label>Country: </label>
             <div>
                 <InputText @bind-Value="@address.ShipCountry" class="form-control" />
                 <ValidationMessage For="@(() => address.ShipCountry)" />
@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-group">
-            <label>Number: </label>
+            <label>State: </label>
             <div>
                 <InputText @bind-Value="@address.ShipState" class="form-control" />
                 <ValidationMessage For="@(() => address.ShipState)" />
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-group">
-            <label>Customer Name: </label>
+            <label>Postal Code: </label>
             <div>
                 <InputText @bind-Value="@address.ShipPostalCode" class="form-control" />
                 <ValidationMessage For="@(() => address.ShipPostalCode)" />

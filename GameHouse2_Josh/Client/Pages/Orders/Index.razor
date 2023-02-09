@@ -35,24 +35,25 @@ else
         <tbody>
             @foreach (var order in Orders)
             {
-                <tr>
-                    <td>@order.OrderNo</td>
-                    <td>@order.Customer.CustName</td>
-                    <td>@order.ShippingAddress.ShipAddress</td>
-                    <td>@order.DateCreated.Date.ToString("dd MMMM yyyy")</td>
-                    <td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays.ToString() : "To Be Determined")</td>
-                    <td>
-                        <a href="/orders/view/@order.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/orders/edit/@order.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@order.OrderNo</td>
+                <td>@order.Customer.CustName</td>
+                <td>@order.ShippingAddress.ShipAddress</td>
+                <td>@order.DateCreated.Date.ToString("dd MMMM yyyy")</td>
+                @*<td>@(order.DateIn != nullDT ? (order.DateIn - order.DateOut).TotalDays.ToString() : "To Be Determined")</td>*@
+                <td>@(order.DateIn != null ? (order.DateIn.Value - order.DateOut).TotalDays.ToString() : "To Be Determined")</td>
+                <td>
+                    <a href="/orders/view/@order.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/orders/edit/@order.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
