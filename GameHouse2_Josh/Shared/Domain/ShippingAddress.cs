@@ -15,7 +15,7 @@ namespace GameHouse2_Josh.Shared.Domain
         public string ShipCountry { get; set; }
         public string ShipState { get; set; }
         [Required]
-        [RegularExpression(@"\d{1}\d{6}", ErrorMessage = "Postal Code is invalid.")]
+        [RegularExpression(@"\d{1}\d{5}", ErrorMessage = "Postal Code is invalid.")]
         public string ShipPostalCode { get; set; }
         public virtual List<Order> Orders { get; set; }
     }
