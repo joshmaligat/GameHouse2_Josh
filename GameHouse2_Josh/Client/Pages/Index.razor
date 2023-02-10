@@ -1,7 +1,72 @@
 ﻿@page "/"
+@*<h1>Hello, world!</h1>
 
-<h1>Hello, world!</h1>
+    Welcome to your new app.
 
-Welcome to your new app.
+    <SurveyPrompt Title="How is Blazor working for you?" />*@
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, h1 {
+            font-family: "Raleway", Arial, sans-serif
+        }
+
+        h1 {
+            letter-spacing: 6px
+        }
+
+        .w3-row-padding img {
+            margin-bottom: 12px
+        }
+    </style>
+</head>
+<body>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-content" style="max-width:1500px">
+
+        <!-- Header -->
+        <header class="w3-panel w3-center w3-opacity" style="padding:128px 16px">
+            <h1 class="w3-xlarge">Online Store</h1>
+            <h1>GameHouse</h1>
+
+            <div class="w3-padding-32">
+                <div class="w3-bar w3-border">
+                    <NavLink class="w3-bar-item w3-button" href="customers" Match="NavLinkMatch.All">Profile</NavLink>
+                    <NavLink class="w3-bar-item w3-button" href="products" Match="NavLinkMatch.All">Games</NavLink>
+                    <NavLink class="w3-bar-item w3-button" href="categories" Match="NavLinkMatch.All">Categories</NavLink>
+                    <NavLink class="w3-bar-item w3-button" href="orders" Match="NavLinkMatch.All">Orders</NavLink>
+                </div>
+            </div>
+        </header>
+
+        <!-- Photo Grid -->
+        <div class="w3-row-padding w3-grayscale" style="margin-bottom:128px">
+            <div class="w3-half">
+                <img src="https://media.wired.com/photos/62855b1bb6cfd378a30c474a/1:1/w_1600,h_1600,c_limit/Build-Game-Watch-It-Die-Hyper-Scape-Games.jpg" style="width:100%">
+                <img src="https://www.cnet.com/a/img/resize/4e6ea51dc1b8b19590da296475a027cd9937fa1f/hub/2022/08/24/26896c8a-94a9-486f-81e8-d3e379b2aeac/fortnite.jpg?auto=webp&fit=crop&height=675&width=1200" style="width:100%">
+                <img src="https://media.contentapi.ea.com/content/dam/gin/images/2022/07/lotr-section-bg-keyart-hero-middle-earth-16x9.jpg.adapt.crop1x1.767p.jpg" style="width:100%">
+                <img src="https://media.contentapi.ea.com/content/dam/gin/images/2021/06/battlefield-2042-key-art.jpg.adapt.crop1x1.767w.jpg" style="width:100%">
+                <img src="https://variety.com/wp-content/uploads/2022/08/WB-Games-MultiVersus.png" style="width:100%">
+                <img src="https://assets1.ignimgs.com/2020/04/06/final-fantasy-vii-remake---button-fin-1586205679705.jpg" style="width:100%">
+            </div>
+
+            <div class="w3-half">
+                <img src="https://www.videogameschronicle.com/files/2022/01/kingdom-hearts.jpg" style="width:100%">
+                <img src="https://assets-prd.ignimgs.com/2021/12/21/valorant-1640045685890.jpg" style="width:100%">
+                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202210/2717/NJHJfoNfV53mtOf9ok4hYxNK.png" style="width:100%">
+                <img src="https://image.api.playstation.com/cdn/UP0006/CUSA05770_00/nHKRkAnRMYjNzZLbt7oFNKQU4FnmECOP6H1hX52klZsz8tXHX16PNqvU5Gk4GsCF.png" style="width:100%">
+                <img src="https://pbs.twimg.com/media/Fn9qbHVWIAQ6wKG?format=jpg&name=large" style="width:100%">
+                <img src="https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_LeagueofLegends_RiotGames_S2_1200x1600-7fd64f0f7b674900bdd172967865d545" style="width:100%">
+            </div>
+        </div>
+
+        <!-- End Page Content -->
+    </div>
+</body>
